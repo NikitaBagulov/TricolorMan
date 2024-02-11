@@ -6,17 +6,17 @@ class Color(Enum):
     BLUE = auto()
 
 class Answer():
-    def __init__(self, answer: str, color: Color):
-        self.answer = answer
+    def __init__(self, text: str, color: Color):
+        self.text = text
         self.color = color
 
-    def __str__(self) -> str:
-        return f"A: {self.answer} {self.color}"
+    def __repr__(self) -> str:
+        return f"A: {self.text} {self.color}"
 
 class Question():
-    def __init__(self, question: str, answers: list):
-        self.question = question
+    def __init__(self, text: str, answers: list):
+        self.text = text
         self.answers = answers
 
-    def __str__(self) -> str:
-        return f"Q: {self.question} for {self.answers}"
+    def __repr__(self) -> str:
+        return f"Q: {self.text} for {self.answers}"
