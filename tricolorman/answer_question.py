@@ -10,7 +10,13 @@ class Answer():
         self.answer = answer
         self.color = color
 
+    def __str__(self) -> str:
+        return f"A: {self.answer} {self.color}"
+
 class Question():
     def __init__(self, question: str, answers: list):
         self.question = question
         self.answers = answers
+
+    def __str__(self) -> str:
+        return f"Q: {self.question} for {self.answers}"
