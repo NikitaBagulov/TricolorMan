@@ -1,12 +1,12 @@
 from enum import Enum, auto
 
-class COLOR(Enum):
+class Color(Enum):
     RED = auto()
     GREEN = auto()
     BLUE = auto()
 
 class Answer():
-    def __init__(self, answer: str, color: COLOR):
+    def __init__(self, answer: str, color: Color):
         self.answer = answer
         self.color = color
 
