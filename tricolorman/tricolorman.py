@@ -1,5 +1,7 @@
 from .answer_question import Color, Answer, Question
 import os
+import sys
+import pkg_resources
 from random import shuffle
 
 
@@ -26,11 +28,10 @@ class Tricolorman:
                 [Color.BLUE, Color.RED, Color.GREEN],
                 [Color.RED, Color.GREEN, Color.BLUE],
             ]
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            questions_file = os.path.join(
-                current_dir, "questions", "questions.txt"
-            )
-            with open(questions_file, "r", encoding="utf-8") as file:
+
+            questions_path = self.search_file(sys.prefix, "questions.txt")
+
+            with open(questions_path, "r", encoding="utf-8") as file:
                 lines = file.readlines()
                 num_questions = len(lines) // 4
                 for i in range(0, num_questions * 4, 4):
@@ -50,6 +51,14 @@ class Tricolorman:
         except Exception as e:
             print(f"Error loading test questions: {e}")
         return questions
+
+    @staticmethod
+    def search_file(directory, filename):
+        """Search for a file in the given directory and its subdirectories."""
+        for root, dirs, files in os.walk(directory):
+            if filename in files:
+                return os.path.join(root, filename)
+        return None
 
     def get_result_images(self):
         """Retrieves images based on the test results."""
@@ -74,25 +83,22 @@ class Tricolorman:
                     continue
                 for i in range(1, 5):
                     image_sequence.append(
-                        os.path.join(
-                            os.path.join(
-                                os.path.dirname(__file__),
-                                "images",
-                                f"{name}{i}.png",
-                            )
+                        self.search_file(sys.prefix,
+                            f"{name}{i}.png",
                         )
                     )
             image_sequence.append(
-                os.path.join(
-                    os.path.join(
-                        os.path.dirname(__file__), "images", "general.png"
-                    )
+                self.search_file(sys.prefix,
+                    "general.png"
                 )
             )
             return image_sequence
         except Exception as e:
-            print(f"Error retrieving result images: {e}")
+            print(f"Ошибка при получении изображений результата: {e}")
             return []
+
+
+
 
     def __shuffle_question_and_answers(self):
         """Shuffles the order of questions and answers."""
